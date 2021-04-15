@@ -20,6 +20,12 @@ function scrapingProfile() {
             phone: 'div > section.pv-contact-info__contact-type.ci-phone > ul > li > span',
             urlLinkedin: 'div > section.pv-contact-info__contact-type.ci-vanity-url > div > a'
         },
+        experience: {
+            positions: '#experience-section > ul' 
+        },
+        education: {
+            schools: '#education-section > ul'
+        },
         option: {
             buttonSeeMore: '[data-control-name="contact_see_more"]',
             buttonCloseSeeMore: 'button.artdeco-modal__dismiss'
@@ -69,6 +75,12 @@ function scrapingProfile() {
                 phone: phoneCss,
                 urlLinkedin: urlLinkedinCss
             },
+            experience: {
+                positions: positionsCss
+            },
+            education: {
+                schools: schoolsCss
+            },
             option: {
                 buttonSeeMore: buttonSeeMoreCss,
                 buttonCloseSeeMore: buttonCloseSeeMoreCss
@@ -93,7 +105,23 @@ function scrapingProfile() {
         const buttonCloseSeeMore = document.querySelector(buttonCloseSeeMoreCss)
         buttonCloseSeeMore.click()
 
-        return { name, resumen, country, email, phone, urlLinkedin }
+        //Experience
+        positionsProfile = [];
+        const positions = document.querySelector(positionsCss).children;
+        for(i=0; i<positions.length; i++){
+            const position = positions[i]?.innerText;
+            positionsProfile.push(position);
+        }
+
+        //Education
+        schoolsProfile = [];
+        const schools = document.querySelector(schoolsCss).children;
+        for(i=0; i<schools.length; i++){
+            const school = schools[i]?.innerText;
+            schoolsProfile.push(school);
+        }
+
+        return { name, resumen, country, email, phone, urlLinkedin, positionsProfile, schoolsProfile}
     }
 
     const getProfile = async () => {
