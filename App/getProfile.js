@@ -110,7 +110,18 @@ function scrapingProfile() {
         const positions = document.querySelector(positionsCss).children;
         for(i=0; i<positions.length; i++){
             const position = positions[i]?.innerText;
-            positionsProfile.push(position);
+            
+            //Splitting position info
+            positionInfo_splits = position.split("\n\n");
+
+            //Splitting dates employed and employment duration
+            datesEmployed = positionInfo_splits[3].split("\n")[1];
+            employment_duration = positionInfo_splits[3].split("\n")[3];
+
+            positionInfo = {"position":positionInfo_splits[0], "company":positionInfo_splits[2], 
+                                "datesEmployed":datesEmployed, "employmenDuration":employment_duration};
+
+            positionsProfile.push(positionInfo);
         }
 
         //Education
@@ -118,7 +129,15 @@ function scrapingProfile() {
         const schools = document.querySelector(schoolsCss).children;
         for(i=0; i<schools.length; i++){
             const school = schools[i]?.innerText;
-            schoolsProfile.push(school);
+            schoolInfo_splits = school.split("\n\n");
+
+            schoolName = schoolInfo_splits[0];
+            degreeName = schoolInfo_splits[1].split("\n")[1];
+            datesAttended = schoolInfo_splits[2].split("\n")[1];
+
+            schoolInfo = {"schoolName":schoolName, "degreeName":degreeName, "datesAttended":datesAttended};
+
+            schoolsProfile.push(schoolInfo);
         }
 
         return { name, resumen, country, email, phone, urlLinkedin, positionsProfile, schoolsProfile}
