@@ -28,7 +28,10 @@ function scrapingProfile() {
         },
         option: {
             buttonSeeMore: '[data-control-name="contact_see_more"]',
-            buttonCloseSeeMore: 'button.artdeco-modal__dismiss'
+            buttonCloseSeeMore: 'button.artdeco-modal__dismiss',
+            //buttonShowMoreExperience: 'pv-profile-section__see-more-inline pv-profile-section__text-truncate-toggle artdeco-button artdeco-button--tertiary artdeco-button--muted'
+            buttonShowMoreExperience: '#experience-section > div > button',
+            buttonShowMoreEducation: '#education-section > div > button'
         }
     }
 
@@ -83,7 +86,9 @@ function scrapingProfile() {
             },
             option: {
                 buttonSeeMore: buttonSeeMoreCss,
-                buttonCloseSeeMore: buttonCloseSeeMoreCss
+                buttonCloseSeeMore: buttonCloseSeeMoreCss,
+                buttonShowMoreExperience: buttonShowMoreExperienceCss,
+                buttonShowMoreEducation: buttonShowMoreEducationCss
             }
         } = cssSelectorsProfile
 
@@ -105,6 +110,12 @@ function scrapingProfile() {
         const buttonCloseSeeMore = document.querySelector(buttonCloseSeeMoreCss)
         buttonCloseSeeMore.click()
 
+        //Clicking on show more experience in order to get all experiences
+        const buttonShowMoreExperience = document.querySelector(buttonShowMoreExperienceCss);
+        buttonShowMoreExperience.click();
+
+        wait(1000);
+
         //Experience
         positionsProfile = [];
         const positions = document.querySelector(positionsCss).children;
@@ -113,6 +124,7 @@ function scrapingProfile() {
             
             //Splitting position info
             positionInfo_splits = position.split("\n\n");
+            //console.log(positionInfo_splits);
 
             //Splitting dates employed and employment duration
             datesEmployed = positionInfo_splits[3].split("\n")[1];
@@ -123,6 +135,12 @@ function scrapingProfile() {
 
             positionsProfile.push(positionInfo);
         }
+
+        //Clicking on show more education in to get all education items
+        const buttonShowMoreEducation = document.querySelector(buttonShowMoreEducationCss);
+        buttonShowMoreEducation.click();
+
+        wait(1000);
 
         //Education
         schoolsProfile = [];
